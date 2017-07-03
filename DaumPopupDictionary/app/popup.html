@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+      <style type="text/css">
+          body {
+              border: 0;
+              margin: 0;
+              padding: 0;
+              background: #ffffff;
+          }
+
+          a, b, span {
+              font-family: Arial;
+              font-size: 12px;
+          }
+
+          *:focus {
+              outline: 0;
+          }
+
+          div.options {
+              width: 160px;
+              padding: 4px 0px;
+          }
+
+            div.options a {
+                display: block;
+                padding: 6px 12px;
+                font-size: 13px;
+                text-decoration: none;
+                color: #111111;
+                outline: 0;
+            }
+
+            div.options a:hover {
+                background: #eeeeee;
+            }
+
+            div.options {
+                display: block;
+                font-size: 15px;
+                color: #111111;
+                outline: 0;
+            }
+      </style>
+  </head>
+  <body>
+      <div class="options" style="border-bottom:1px #eeeeee solid;">
+        <input id="cbEnabled" type="checkbox">
+        사용유무
+      </div>
+      <!--<div class="options">
+          <a href="#" id="go-to-options" style="font-weight:bold;">Go to options</a>
+      </div>-->
+
+      <!-- Javascript -->
+      <script src="popup.js"></script>
+</body>
+</html>
+
