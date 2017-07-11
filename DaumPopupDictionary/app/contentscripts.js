@@ -187,11 +187,29 @@
 
     function getSelectionText() {
         var text = "";
-        if (window.getSelection) {
+        var activeEl = document.activeElement;
+        var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+        if (
+          (activeElTagName == "textarea") || (activeElTagName == "input" &&
+          /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
+          (typeof activeEl.selectionStart == "number")
+        ) {
+            // 2017.07.12 by jw.kang
+            // 입력창의 경우에는 제외
+            text = "";
+        } else if (window.getSelection) {
             text = window.getSelection().toString();
         }
         return text;
     }
+
+    //function getSelectionText() {
+    //    var text = "";
+    //    if (window.getSelection) {
+    //        text = window.getSelection().toString();
+    //    }
+    //    return text;
+    //}
 
     document.onmousedown = function (event) {
 
@@ -270,6 +288,7 @@
             command.style.height = 34;
             command.style.padding = 0;
             command.style.border = 2;
+            command.title = "검색 결과 보기";
             $(command).button();
             $(command).click(function () {
                 createPopup(event, newURL);
