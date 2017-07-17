@@ -12,7 +12,7 @@
     height: 10px;
     overflow: hidden;
     position: absolute;
-    left: 50%;
+    left: 33%;
     margin-left: -20px;
     bottom: -10px;
 }
@@ -21,7 +21,7 @@
     bottom: auto;
 }
 .arrow.left {
-    left: 20%;
+    left: 40%;
 }
 .arrow:after {
     content: "";

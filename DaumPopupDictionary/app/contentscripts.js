@@ -5,14 +5,82 @@
         g_popupWidth : 400,
         g_popupHeight : 300,
     };
+
+    DaumPopupDictionary.Data = {};
+    DaumPopupDictionary.Data.Default = {
+        mainUrlName: "Daum(mobile)"
+    };
+    DaumPopupDictionary.Data.Urls = {
+        getMainUrlInfo: function() {
+            return this.List.find(function (item) { return item.name.toLowerCase() == DaumPopupDictionary.Data.Default.mainUrlName.toLowerCase(); });
+        },
+        List: [
+            {
+                name: "Daum(mobile)",
+                tooltip: "팝업 검색하기",
+                urlFormat : 'http://m.dic.daum.net/search.do?q={searchtext:endode}&dic=all',
+                urlImg: chrome.extension.getURL("img/3d-dictionary32.png"),
+                enabled: true,
+                targetWindow: 0 // 0: iframe, 1: new tab
+            },
+            {
+                name: "Daum",
+                tooltip: "새 탭에서 검색하기",
+                urlFormat: 'http://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&q={searchtext:endode}',
+                urlImg: chrome.extension.getURL("img/3d-dictionary32(new).png"),
+                enabled: true,
+                targetWindow: 1 // 0: iframe, 1: new tab
+            },
+            {
+                name: "Naver(mobile)",
+                urlFormat: 'http://m.krdic.naver.com/search/all/0/{searchtext:endode}?format=HTML&isMobile=true',
+                urlImg: chrome.extension.getURL("img/3d-dictionary32.png"),
+                enabled: false,
+                targetWindow: 1 // 0: iframe, 1: new tab
+            },
+            {
+                name: "Naver",
+                urlFormat: 'https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=5&ie=utf8&query={searchtext:endode}',
+                urlImg: chrome.extension.getURL("img/3d-dictionary32.png"),
+                enabled: false,
+                targetWindow: 1 // 0: iframe, 1: new tab
+            },
+        ]};
+
+    DaumPopupDictionary.StringHelper = {
+        checkSpace: function (str) {
+            if (str.search(/\s/) != -1) {
+                return true;
+            } else
+                return false;
+        },
+        checkSpecial: function (str) {
+            var pattern = /[~!@\#$%^&*\()\-=+_']/gi;
+
+            return pattern.test(str);
+        },
+        checkHangul: function (str) {
+            var pattern = /^[가-힝]*$/; ///^[0-9a-zA-Z가-힝]*$/;
+
+            return pattern.test(str);
+        }
+    };
+
+    DaumPopupDictionary.Converter = {
+        URLFormatToURL: function (urlFormat, searchtext) {
+
+            var trans = "";
+
+            if (urlFormat.indexOf("{searchtext:endode}") >= 0)
+                trans = urlFormat.replace("{searchtext:endode}", encodeURIComponent(searchtext));
+
+            return trans;
+        }
+    };
+
 })(DaumPopupDictionary || (DaumPopupDictionary = {}));
 
 (function (DPD) {
-
-    var g_PrevSelectedText =  "";
-    //var g_appEnabled = true;
-    //var g_popupWidth = 400;
-    //var g_popupHeight = 300;
 
     //console.log("chrome.storage.sync.get [get](" + JSON.stringify(DPD.Setting) + ")");
 
@@ -101,6 +169,7 @@
                 my: 'top+20',
                 at: 'right',
                 of: event,
+                collision: "flipfit",
                 using: function (position, feedback) {
                     // 2017.07.03 by jw.kang
                     // 팝업이 움직일 경우 화살표가 여러개 생기는 문제가 있어서 추가함.
@@ -203,13 +272,28 @@
         return text;
     }
 
-    //function getSelectionText() {
-    //    var text = "";
-    //    if (window.getSelection) {
-    //        text = window.getSelection().toString();
-    //    }
-    //    return text;
-    //}
+    function getSelectionTextRect()
+    {
+        var sel = window.getSelection();
+        var range = sel.getRangeAt(0).cloneRange();
+        var rects = range.getClientRects();
+
+        var minTop = 99999;
+        var minLeft = 99999;
+        var maxRight = 0;
+        var maxBottom = 0;
+
+        for (var i = 0; i < rects.length; i++) {
+            var item = rects[i];
+
+            minTop = Math.min(minTop, item.top);
+            minLeft = Math.min(minLeft, item.left);
+            maxRight = Math.max(maxRight, item.right);
+            maxBottom = Math.max(maxBottom, item.bottom);
+        }
+
+        return { top:minTop, right:maxRight, bottom: maxBottom, left:minLeft };
+    }
 
     document.onmousedown = function (event) {
 
@@ -228,7 +312,7 @@
 
     document.onmouseup = function (event) {
 
-        var selectedText = getSelectionText();
+        var selectedText = getSelectionText().trim();
 
         var isOpenMiniPopup = isOpenMiniPopUp();
 
@@ -238,13 +322,14 @@
         var isOpen = isOpenPopUp();
 
         if (isOpen && selectedText == "")
-        {
             closePopup();
-        }
 
+        // 단어 검사
         if (selectedText == "")
             return;
-        if (selectedText == g_PrevSelectedText)
+        if (DaumPopupDictionary.StringHelper.checkSpace(selectedText))
+            return;
+        if (DaumPopupDictionary.StringHelper.checkSpecial(selectedText))
             return;
 
         // 팝업 닫기 및 삭제
@@ -255,20 +340,6 @@
         // 비활성화일 경우 중지
         if (DPD.Setting.g_appEnabled == false)
             return;
-
-        g_PrevSelectedText = selectedText;
-
-        var newURL = "";
-
-        // Daum
-        newURL = 'http://m.dic.daum.net/search.do?q=' +
-                      encodeURIComponent(selectedText) +
-                      '&dic=all';;//'&dic=kor';
-
-        // Naver
-        //newURL = 'http://m.krdic.naver.com/search/all/0/' + 
-        //         encodeURIComponent(selectedText) +
-        //         '?format=HTML&isMobile=true';
 
         // create mini popup
         if ($("#divMiniPopup").dialog("instance") == undefined)
@@ -282,45 +353,73 @@
             divContainer.style.overflowY = "hidden";
             divContainer.style.border = 0;
 
-            var command = document.createElement("img");
-            command.src = chrome.extension.getURL("img/3d-dictionary32.png");
-            command.style.width = 34;
-            command.style.height = 34;
-            command.style.padding = 0;
-            command.style.border = 2;
-            command.title = "검색 결과 보기";
-            $(command).button();
-            $(command).click(function () {
-                createPopup(event, newURL);
+            var itemCnt = 0;
+            DaumPopupDictionary.Data.Urls.List.forEach(function (item, index, array) {
+                if (item.enabled == false)
+                    return;
+                
+                itemCnt++;
+
+                var urlFormat = item.urlFormat;
+                var urlImg = item.urlImg;
+                var urlConverted = DaumPopupDictionary.Converter.URLFormatToURL(urlFormat, selectedText);
+
+                var command = document.createElement("img");
+                command.src = urlImg;
+                command.style.width = 34;
+                command.style.height = 34;
+                command.style.padding = 0;
+                command.style.margin = "0px 2px 0px 0px";
+                command.style.border = 2;
+                command.title = item.tooltip;
+                command.style.display = "inline-block";
+                command.style.float = "left";
+                $(command).button();
+                $(command).click(function () {
+                    if (item.targetWindow == 0)
+                        createPopup(event, urlConverted);
+                    else if (item.targetWindow == 1)
+                    {
+                        window.open(urlConverted);
+                        closeMiniPopup();
+                    }
+                });
+                divContainer.appendChild(command);
             });
-            divContainer.appendChild(command);
 
             document.body.appendChild(divContainer);
 
+            var calWidth = itemCnt * 36;
+
+            var rect = getSelectionTextRect();
+            var calLeft = (rect.left + rect.right) / 2 - (calWidth / 2);
+
+            console.log(rect.top + ", " + rect.right + ", " + rect.bottom + ", " + rect.left);
             // dialog 방식
             $("#divMiniPopup").dialog({
                 draggable: false,
                 resizable: false,
                 modal: false,
-                position:
-                {
-                    my: 'center top+12',
-                    at: 'center bottom',
-                    of: event,
+                position: {
+                    my: "left top",
+                    at: "left+" + (window.scrollX + calLeft) + " top+" + (window.scrollY + rect.bottom + 5),
+                    of: "body",
+                    collision: "none",
                     using: function (position, feedback) {
                         $(this).css(position);
                         $("<div>")
-                          .addClass("arrow")
-                          .addClass(feedback.vertical)
-                          .addClass(feedback.horizontal)
-                          .appendTo(this);
+                            .addClass("arrow")
+                            //.addClass(feedback.vertical)  // 2017.07.16 by jw.kang 강제로 top 지정함.
+                            .addClass("top")
+                            .addClass(feedback.horizontal)
+                            .appendTo(this);
                     }
                 },
-                width: 35,
+                width: calWidth,
                 height: 70,
-                maxWidth: 35,
+                maxWidth: calWidth,
                 maxHeight: 70,
-                minWidth: 35,
+                minWidth: calWidth,
                 minHeight: 70,
                 show: { effect: "fade", duration: 500 },
                 hide: { effect: "fade", duration: 500 },
@@ -340,8 +439,8 @@
                 background: "transparent",
             });
             // 크기 맞추기
-            $("#divMiniPopup").width(35).height(35);
-            $(".ui-dialog").width(35).height(35);
+            $("#divMiniPopup").width(calWidth).height(35);
+            $(".ui-dialog").width(calWidth).height(35);
         }
     };
 })(DaumPopupDictionary);

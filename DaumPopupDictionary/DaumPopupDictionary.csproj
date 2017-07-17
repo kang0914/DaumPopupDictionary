@@ -46,6 +46,7 @@
     <Content Include="app\img\3d-dictionary128.png" />
     <Content Include="app\img\3d-dictionary16.png" />
     <Content Include="app\img\3d-dictionary24.png" />
+    <Content Include="app\img\3d-dictionary32%28new%29.png" />
     <Content Include="app\img\3d-dictionary32.png" />
     <Content Include="app\jquery-ui\jquery-1.12.4.js" />
     <Content Include="app\jquery-ui\jquery-ui.css" />
