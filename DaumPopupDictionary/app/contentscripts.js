@@ -187,6 +187,21 @@
             height: DPD.Setting.g_popupHeight,
             show: { effect: "fade", duration: 500 },
             hide: { effect: "fade", duration: 500 },
+            create: function (event, ui) {
+                $('.ui-dialog').wrap('<div class="dpd" />');
+            },
+            open: function (event, ui) {
+                $('.ui-widget-overlay').wrap('<div class="dpd" />');
+            },
+            close: function (event, ui) {
+                $(".dpd").filter(function () {
+                    if ($(this).text() == "")
+                    {
+                        return true;
+                    }
+                    return false;
+                }).remove();
+            }
         });
 
         // 팝업 이외에 마우스 클릭 시 사라지도록 
@@ -394,7 +409,7 @@
             var rect = getSelectionTextRect();
             var calLeft = (rect.left + rect.right) / 2 - (calWidth / 2);
 
-            console.log(rect.top + ", " + rect.right + ", " + rect.bottom + ", " + rect.left);
+            //console.log(rect.top + ", " + rect.right + ", " + rect.bottom + ", " + rect.left);
             // dialog 방식
             $("#divMiniPopup").dialog({
                 draggable: false,
@@ -415,16 +430,29 @@
                             .appendTo(this);
                     }
                 },
-                width: calWidth,
-                height: 70,
-                maxWidth: calWidth,
-                maxHeight: 70,
-                minWidth: calWidth,
-                minHeight: 70,
+                width: "auto",
+                minHeight: "auto",
+
                 show: { effect: "fade", duration: 500 },
                 hide: { effect: "fade", duration: 500 },
                 classes: {
                     "ui-dialog": "ui-dialog-mini-popup"
+                },
+
+                create: function (event, ui) {
+                    $('.ui-dialog').wrap('<div class="dpd" />');
+                },
+                open: function (event, ui) {
+                    $('.ui-widget-overlay').wrap('<div class="dpd" />');
+                },
+                close: function(event, ui){
+                    $(".dpd").filter(function () {
+                        if ($(this).text() == "")
+                        {
+                            return true;
+                        }
+                        return false;
+                    }).remove();
                 }
             });
 
@@ -439,8 +467,8 @@
                 background: "transparent",
             });
             // 크기 맞추기
-            $("#divMiniPopup").width(calWidth).height(35);
-            $(".ui-dialog").width(calWidth).height(35);
+            //$("#divMiniPopup").width(calWidth).height(35);
+            //$(".ui-dialog").width(calWidth).height(35);
         }
     };
 })(DaumPopupDictionary);

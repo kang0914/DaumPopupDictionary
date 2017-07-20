@@ -1,13 +1,13 @@
 ﻿/* mini popup */
-.ui-dialog-mini-popup {
+.dpd .ui-dialog-mini-popup {
     border-radius: 3px;
     box-shadow: 1px 1px 0px grey;
 }
-.arrow:after {
+.dpd .arrow:after {
     background: white;
     border:1px solid grey;
 }
-.arrow {
+.dpd .arrow {
     width: 70px;
     height: 10px;
     overflow: hidden;
@@ -16,14 +16,14 @@
     margin-left: -20px;
     bottom: -10px;
 }
-.arrow.top {
+.dpd .arrow.top {
     top: -10px;
     bottom: auto;
 }
-.arrow.left {
+.dpd .arrow.left {
     left: 40%;
 }
-.arrow:after {
+.dpd .arrow:after {
     content: "";
     position: absolute;
     left: 20px;
@@ -35,16 +35,16 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-.arrow.top:after {
+.dpd .arrow.top:after {
     bottom: -20px;
     top: auto;
 }
 /*search popup*/
-.arrow-searchpopup:after {
+.dpd .arrow-searchpopup:after {
     background: white;
     border:1px solid grey;
 }
-.arrow-searchpopup {
+.dpd .arrow-searchpopup {
     width: 70px;
     height: 10px;
     overflow: hidden;
@@ -53,14 +53,14 @@
     margin-left: -30px;
     bottom: -10px;
 }
-.arrow-searchpopup.top {
+.dpd .arrow-searchpopup.top {
     top: -10px;
     bottom: auto;
 }
-.arrow-searchpopup.left {
+.dpd .arrow-searchpopup.left {
     left: 50%;
 }
-.arrow-searchpopup:after {
+.dpd .arrow-searchpopup:after {
     content: "";
     position: absolute;
     left: 20px;
@@ -72,7 +72,7 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-.arrow-searchpopup.top:after {
+.dpd .arrow-searchpopup.top:after {
     bottom: -20px;
     top: auto;
 }
