@@ -1,61 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Getting Started Extension's Popup</title>
-      <style type="text/css">
-          body {
-              border: 0;
-              margin: 0;
-              padding: 0;
-              background: #ffffff;
-          }
+<head>
+    <title>다음 팝업 사전 확장 프로그램 옵션</title>
+    <!-- Bootstrap -->
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
 
-          a, b, span {
-              font-family: Arial;
-              font-size: 12px;
-          }
+    <style>
+        body {
+            padding: 10px;
+        }
+    </style>
+</head>
 
-          *:focus {
-              outline: 0;
-          }
+<body style="width:300px;">
 
-          div.options {
-              width: 160px;
-              padding: 4px 0px;
-          }
+    <div class="alert alert-success" role="alert" style="margin-bottom:0px">
+        <a href="options.html" target="_blank" class="alert-link">확장 프로그램 옵션 보기</a>
+    </div>
 
-            div.options a {
-                display: block;
-                padding: 6px 12px;
-                font-size: 13px;
-                text-decoration: none;
-                color: #111111;
-                outline: 0;
-            }
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="jquery-ui/jquery-1.12.4.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/bootstrap.min.js"></script>
 
-            div.options a:hover {
-                background: #eeeeee;
-            }
+    <script src="jquery-ui/jquery-ui.js"></script>
 
-            div.options {
-                display: block;
-                font-size: 15px;
-                color: #111111;
-                outline: 0;
-            }
-      </style>
-  </head>
-  <body>
-      <div class="options" style="border-bottom:1px #eeeeee solid;">
-        <input id="cbEnabled" type="checkbox">
-        사용유무
-      </div>
-      <!--<div class="options">
-          <a href="#" id="go-to-options" style="font-weight:bold;">Go to options</a>
-      </div>-->
-
-      <!-- Javascript -->
-      <script src="popup.js"></script>
+    <!-- Javascript -->
+    <script src="options.js"></script>
 </body>
 </html>
-

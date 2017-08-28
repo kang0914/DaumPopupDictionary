@@ -1,13 +1,13 @@
 ﻿/* mini popup */
-.dpd .ui-dialog-mini-popup {
+.ui-dialog-mini-popup {
     border-radius: 3px;
     box-shadow: 1px 1px 0px grey;
 }
-.dpd .arrow:after {
+.arrow:after {
     background: white;
     border:1px solid grey;
 }
-.dpd .arrow {
+.arrow {
     width: 70px;
     height: 10px;
     overflow: hidden;
@@ -16,14 +16,14 @@
     margin-left: -20px;
     bottom: -10px;
 }
-.dpd .arrow.top {
+.arrow.top {
     top: -10px;
     bottom: auto;
 }
-.dpd .arrow.left {
+.arrow.left {
     left: 40%;
 }
-.dpd .arrow:after {
+.arrow:after {
     content: "";
     position: absolute;
     left: 20px;
@@ -35,16 +35,16 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-.dpd .arrow.top:after {
+.arrow.top:after {
     bottom: -20px;
     top: auto;
 }
 /*search popup*/
-.dpd .arrow-searchpopup:after {
+.arrow-searchpopup:after {
     background: white;
     border:1px solid grey;
 }
-.dpd .arrow-searchpopup {
+.arrow-searchpopup {
     width: 70px;
     height: 10px;
     overflow: hidden;
@@ -53,14 +53,14 @@
     margin-left: -30px;
     bottom: -10px;
 }
-.dpd .arrow-searchpopup.top {
+.arrow-searchpopup.top {
     top: -10px;
     bottom: auto;
 }
-.dpd .arrow-searchpopup.left {
+.arrow-searchpopup.left {
     left: 50%;
 }
-.dpd .arrow-searchpopup:after {
+.arrow-searchpopup:after {
     content: "";
     position: absolute;
     left: 20px;
@@ -72,7 +72,36 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-.dpd .arrow-searchpopup.top:after {
+.arrow-searchpopup.top:after {
     bottom: -20px;
     top: auto;
+}
+
+.dpd-popup-box {
+    padding: 0 !important; 
+    margin: 0px 0px 0px 1px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border: 0;
+}
+
+.dpd-popup-box-img {
+    padding: 0;
+    margin: 0px 2px 0px 0px;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.dpd-popup-result-container {
+    padding: 0 !important;
+    margin: 0;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+}
+
+.dpd-popup-result-iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
 }

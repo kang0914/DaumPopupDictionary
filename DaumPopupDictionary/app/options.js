@@ -1,16 +1,17 @@
 ﻿// Saves options to chrome.storage.sync.
 function save_options() {
-    //var color = document.getElementById('color').value;
+
     var bEnabled = document.getElementById('cbEnabled').checked;
+    var popupPosition = $(':radio[name="radioPopupPosition"]:checked').val();
+
     chrome.storage.sync.set({
-        appEnabled: bEnabled
+        appEnabled: bEnabled,
+        popupPosition: popupPosition
     }, function () {
-        alert('status');
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
-        status.textContent = 'Options saved.';
+        status.textContent = '옵션이 저장되었습니다.';
         setTimeout(function () {
-            alert('status');
             status.textContent = '';
         }, 750);
     });
@@ -19,13 +20,21 @@ function save_options() {
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {
-    // Use default value color = 'red' and likesColor = true.
+
     chrome.storage.sync.get({
-        appEnabled: true
+        appEnabled: true,
+        popupPosition: 0, // 0: under, 1: over
     }, function (items) {
-        //document.getElementById('color').value = items.favoriteColor;
+        // 사용유무
         document.getElementById('cbEnabled').checked = items.appEnabled;
+        // 팝업위치
+        $('input:radio[name=radioPopupPosition]:input[value=' + items.popupPosition + ']').attr("checked", true)
+                                                                                          .parents("label").addClass("active")
     });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
+
+$(function () {
+
+});
