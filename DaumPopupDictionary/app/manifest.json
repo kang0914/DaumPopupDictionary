@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "다음 팝업 사전",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "다음(Daum) 사전을 이용한 팝업 사전입니다. (Popup Dictionary using Daum Mobile dictionary.)",
   "icons": {
     "16" : "img/3d-dictionary16.png",

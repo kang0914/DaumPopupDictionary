@@ -934,7 +934,7 @@ $.fn.position = function( options ) {
 	if ( collision.length === 1 ) {
 		collision[ 1 ] = collision[ 0 ];
 	}
-    debugger
+    
 	if ( options.at[ 0 ] === "right" ) {
 		basePosition.left += targetWidth;
 	} else if ( options.at[ 0 ] === "center" ) {
