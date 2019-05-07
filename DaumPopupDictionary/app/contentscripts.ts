@@ -238,9 +238,9 @@
                     "ui-dialog": "ui-dialog-mini-popup"
                 },
 
-                create: function (event, ui) {
-                    $('.ui-dialog-titlebar').hide();
-                    $('.ui-dialog-mini-popup').css("zIndex", 99999);
+                create: function (event, ui) {                    
+                    $('.ui-dialog-titlebar').hide();                    
+                    $('.ui-dialog-mini-popup').css("zIndex", 99999);                    
                 },
             });
         }
@@ -361,6 +361,7 @@
 
                 create: function (event, ui) {
                     $('.ui-dialog-titlebar').hide();
+                    $('.ui-dialog-titlebar').parent().css("zIndex", 99999);
                 },
             });
         }
