@@ -22,8 +22,8 @@
 
     export class Setting  {
         static g_appEnabled:boolean = true;
-        static g_popupWidth:number = 400;
-        static g_popupHeight: number = 300;
+        static g_popupWidth:number = 300;
+        static g_popupHeight: number = 400;
 
         static g_popupPosition: PopupPosition = PopupPosition.under;
     }
@@ -353,6 +353,9 @@
                 width: DaumPopupDictionary.Setting.g_popupWidth,
                 height: DaumPopupDictionary.Setting.g_popupHeight,
 
+                minWidth: 300,
+                minHeight: 400,
+
                 show: { effect: "fade", duration: 500 },
                 hide: { effect: "fade", duration: 500 },
 
@@ -367,7 +370,7 @@
 
             var $container = $("<div>")
                                         .attr("id", this.elementID)
-                                        .addClass("dpd-popup-result-container")
+                .addClass("dpd-popup-result-container")
                                         .appendTo(document.body);
 
             $("<iframe>")
@@ -402,8 +405,8 @@ $(document).ready(function () {
         if (DaumPopupDictionary.Setting.g_popupWidth < 300)
             DaumPopupDictionary.Setting.g_popupWidth = 300;
 
-        if (DaumPopupDictionary.Setting.g_popupHeight < 200)
-            DaumPopupDictionary.Setting.g_popupHeight = 200;
+        if (DaumPopupDictionary.Setting.g_popupHeight < 400)
+            DaumPopupDictionary.Setting.g_popupHeight = 400;
     });
 
     // 설정값 변경 이벤트 등록
