@@ -240,6 +240,7 @@
 
                 create: function (event, ui) {
                     $('.ui-dialog-titlebar').hide();
+                    $('.ui-dialog-mini-popup').css("zIndex", 99999);
                 },
             });
         }
@@ -372,7 +373,7 @@
             $("<iframe>")
                 .attr("id", "iframePopup")
                 .addClass("dpd-popup-result-iframe")
-                .on("load", () => {
+                .on("load", (event) => {
                     if (this.isOpen())
                         return;
 
@@ -448,8 +449,10 @@ $(document).ready(function () {
         // 단어 검사
         if (selectedText == "")
             return;
-        if (DaumPopupDictionary.StringHelper.checkSpace(selectedText))
-            return;
+        // 스페이스 포함여부 검사
+        //if (DaumPopupDictionary.StringHelper.checkSpace(selectedText))
+        //    return;
+        // 특수문자 포함여부 검사
         if (DaumPopupDictionary.StringHelper.checkSpecial(selectedText))
             return;
 
@@ -524,4 +527,9 @@ $(document).ready(function () {
                 break;
         }        
     }
+
+    // 다음 모바일 페이지의 상단 검색창에 포커스가 이동할 경우 기본값으로 해당 검색어가 들어가도록 함.(안드로이드 버전과 동일)
+    $("input#q.tf_keyword").focus(function () {
+        var keyword = $("input#q.tf_keyword").attr("value"); $("input#q.tf_keyword").val(keyword);
+    });
 });
