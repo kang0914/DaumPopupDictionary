@@ -23,7 +23,7 @@
   "content_scripts": [
     {
       "all_frames": true,
-      "matches": [ "http://*/*" ],
+      "matches": [ "*://*/*" ],
       "js": [
         "jquery-ui/jquery-1.12.4.js",
         "jquery-ui/jquery-ui.js",

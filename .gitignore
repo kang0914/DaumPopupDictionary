@@ -240,3 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/DaumPopupDictionary/app/contentscripts.js
+/DaumPopupDictionary/app/contentscripts.js.map

@@ -46,7 +46,7 @@
                     id: 1,
                     name: "Daum(mobile)",
                     tooltip: "팝업 검색하기",
-                    urlFormat: 'http://m.dic.daum.net/search.do?q={searchtext:endode}&dic=all',
+                    urlFormat: 'https://m.dic.daum.net/search.do?q={searchtext:endode}&dic=all',
                     urlImg: chrome.extension.getURL("img/3d-dictionary32.png"),
                     enabled: true,
                     targetWindow: TargetWindowType.iframe // 0: iframe, 1: new tab
@@ -55,7 +55,7 @@
                     id: 2,
                     name: "Daum",
                     tooltip: "새 탭에서 검색하기",
-                    urlFormat: 'http://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&q={searchtext:endode}',
+                    urlFormat: 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&q={searchtext:endode}',
                     urlImg: chrome.extension.getURL("img/3d-dictionary32(new).png"),
                     enabled: true,
                     targetWindow: TargetWindowType.new_tab // 0: iframe, 1: new tab
@@ -63,7 +63,7 @@
                 {
                     id: 3,
                     name: "Naver(mobile)",
-                    urlFormat: 'http://m.krdic.naver.com/search/all/0/{searchtext:endode}?format=HTML&isMobile=true',
+                    urlFormat: 'https://m.krdic.naver.com/search/all/0/{searchtext:endode}?format=HTML&isMobile=true',
                     urlImg: chrome.extension.getURL("img/3d-dictionary32.png"),
                     enabled: false,
                     targetWindow: TargetWindowType.new_tab // 0: iframe, 1: new tab
