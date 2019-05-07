@@ -2,7 +2,9 @@
 .ui-dialog-mini-popup {
     border-radius: 3px;
     box-shadow: 1px 1px 0px grey;
+    min-width: 50px !important;
 }
+
 .arrow:after {
     background: white;
     border:1px solid grey;
