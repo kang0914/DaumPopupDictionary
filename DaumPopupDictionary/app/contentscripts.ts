@@ -143,6 +143,9 @@
             var maxRight = 0;
             var maxBottom = 0;
 
+            if (rects.length == 0)
+                return null;
+
             for (var i = 0; i < rects.length; i++) {
                 var item = rects[i];
 
@@ -468,6 +471,9 @@ $(document).ready(function () {
         $("#divSelectedText").remove();
 
         var rect = DaumPopupDictionary.Utils.getSelectionTextRect();
+
+        if (rect == null)
+            return;
 
         $("<div>")
             .attr("id", "divSelectedText")
